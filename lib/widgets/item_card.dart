@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:twiscode_test/constants/url_constant.dart';
 import 'package:twiscode_test/utils/func_util.dart';
 import 'package:twiscode_test/widgets/cached_image.dart';
@@ -37,7 +36,7 @@ class ItemCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Nama Produk",
+                      "NamaProdukkkkkkkkkkk",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.blue[900]),
@@ -46,7 +45,9 @@ class ItemCard extends StatelessWidget {
                       numToCurrency(10000),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(color: Colors.amber),
+                      style: TextStyle(
+                          color: Colors.amber[700],
+                          fontWeight: FontWeight.bold),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -94,9 +95,9 @@ class ItemCard extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Colors.lightBlue,
                                   borderRadius: BorderRadius.circular(5)),
-                              child: Text(
-                                "Ready Stock",
-                                style: const TextStyle(
+                              child: const Text(
+                                "READY STOCK",
+                                style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 11,
                                     fontWeight: FontWeight.w500),
@@ -104,10 +105,13 @@ class ItemCard extends StatelessWidget {
                             )
                           ],
                         ),
-                        Expanded(
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 5),
-                            child: Image.asset('assets/halal.png'),
+                        Visibility(
+                          child: Expanded(
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset('assets/halal.png'),
+                            ),
                           ),
                         ),
                       ],

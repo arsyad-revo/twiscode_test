@@ -6,71 +6,107 @@ class ItemShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? date = "2020-12-12";
     return SizedBox(
       width: 140,
       child: Card(
+        margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: Shimmer.fromColors(
-          baseColor: Colors.grey[300]!,
-          highlightColor: Colors.grey[100]!,
+          highlightColor: Colors.grey[300]!,
+          baseColor: Colors.grey[100]!,
           child: Column(children: [
-            Container(
-              height: 160,
-              decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(10)),
-            ),
+            SizedBox(
+                height: 125,
+                child: Container(
+                  decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10)),
+                      color: Colors.white),
+                )),
             Expanded(
               child: Container(
                 alignment: Alignment.center,
                 padding: const EdgeInsets.all(5),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Container(
-                      height: 10,
+                      padding: const EdgeInsets.all(5),
                       width: double.infinity,
+                      height: 15,
                       decoration: BoxDecoration(
                           color: Colors.white,
-                          borderRadius: BorderRadius.circular(2)),
+                          borderRadius: BorderRadius.circular(5)),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    Container(
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      padding: const EdgeInsets.all(5),
+                      width: 80,
+                      height: 15,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5)),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(children: [
-                          const Icon(
-                            Icons.star_rounded,
-                            color: Colors.amber,
-                            size: 16,
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(children: [
+                              const Icon(
+                                Icons.location_on_sharp,
+                                size: 16,
+                                color: Colors.black45,
+                              ),
+                              Container(
+                                margin: const EdgeInsets.symmetric(vertical: 5),
+                                padding: const EdgeInsets.all(5),
+                                width: 80,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5)),
+                              )
+                            ]),
+                            Row(children: [
+                              const Icon(
+                                Icons.person,
+                                size: 16,
+                                color: Colors.black45,
+                              ),
+                              Container(
+                                padding: const EdgeInsets.all(5),
+                                width: 80,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(5)),
+                              )
+                            ]),
+                            Container(
+                              margin: const EdgeInsets.symmetric(vertical: 5),
+                              padding: const EdgeInsets.all(5),
+                              width: 60,
+                              height: 20,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(5)),
+                            )
+                          ],
+                        ),
+                        Visibility(
+                          child: Expanded(
+                            child: Container(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: Image.asset('assets/halal.png'),
+                            ),
                           ),
-                          Container(
-                            height: 10,
-                            width: 20,
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(2)),
-                          ),
-                        ]),
-                        Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 5),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(2)),
-                          child: Text(
-                            date.substring(0, 4),
-                            style: const TextStyle(
-                                fontSize: 9,
-                                color: Colors.white,
-                                fontStyle: FontStyle.italic,
-                                fontWeight: FontWeight.w500),
-                          ),
-                        )
+                        ),
                       ],
-                    )
+                    ),
                   ],
                 ),
               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twiscode_test/widgets/item_card.dart';
+import 'package:twiscode_test/widgets/item_shimmer.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -46,7 +47,7 @@ class _HomeState extends State<Home> {
                     crossAxisCount: 2,
                     childAspectRatio: 80 / 125),
                 itemBuilder: (context, i) {
-                  return ItemCard();
+                  return ItemShimmer();
                 }),
           ),
         ));
