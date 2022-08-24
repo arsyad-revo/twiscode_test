@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:twiscode_test/utils/func_util.dart';
+import 'package:twiscode_test/widgets/item_list.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({Key? key}) : super(key: key);
@@ -18,11 +19,11 @@ class _CartScreenState extends State<CartScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back,
                 color: Colors.black,
               )),
-          title: Text(
+          title: const Text(
             "CART",
             style: TextStyle(color: Colors.black),
           ),
@@ -31,7 +32,7 @@ class _CartScreenState extends State<CartScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-              padding: const EdgeInsets.all(15),
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               child: Text(
                 "Produk yang akan anda pesan",
                 style: TextStyle(
@@ -41,11 +42,16 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
             Expanded(
-                child: ListView.builder(
-              padding: EdgeInsets.symmetric(horizontal: 15),
+                child: ListView.separated(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
               itemCount: 10,
               itemBuilder: (context, index) {
-                return Text("Halo");
+                return ItemList();
+              },
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(
+                  height: 10,
+                );
               },
             )),
             Container(
