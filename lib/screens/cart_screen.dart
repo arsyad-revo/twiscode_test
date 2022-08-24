@@ -56,12 +56,19 @@ class _CartScreenState extends State<CartScreen> {
             )),
             Container(
               padding: const EdgeInsets.all(15),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(20),
                       topRight: Radius.circular(20)),
                   color: Colors.white,
-                  boxShadow: [BoxShadow(blurRadius: 2)]),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: const Offset(0, 1), // changes position of shadow
+                    ),
+                  ]),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
