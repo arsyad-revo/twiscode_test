@@ -1,4 +1,7 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:twiscode_test/screens/cart_screen.dart';
 import 'package:twiscode_test/widgets/item_card.dart';
 import 'package:twiscode_test/widgets/item_shimmer.dart';
 
@@ -27,10 +30,27 @@ class _HomeState extends State<Home> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.shopping_cart,
-                  color: Colors.black,
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      PageTransition(
+                          type: PageTransitionType.fade,
+                          child: const CartScreen()));
+                },
+                icon: Badge(
+                  badgeContent: Text(
+                    '3',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  shape: BadgeShape.square,
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  borderRadius: BorderRadius.circular(3),
+                  child: const Icon(
+                    Icons.shopping_cart,
+                    color: Colors.black,
+                  ),
                 ))
           ],
         ),
@@ -47,7 +67,7 @@ class _HomeState extends State<Home> {
                     crossAxisCount: 2,
                     childAspectRatio: 80 / 125),
                 itemBuilder: (context, i) {
-                  return ItemShimmer();
+                  return ItemCard();
                 }),
           ),
         ));
