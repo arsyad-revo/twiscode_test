@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:twiscode_test/providers/cart_provider.dart';
+import 'package:twiscode_test/providers/product_provider.dart';
 import 'package:twiscode_test/screens/home_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider<CartProvider>(
+      create: (context) => CartProvider(),
+    ),
+    ChangeNotifierProvider<ProductProvider>(
+      create: (context) => ProductProvider(),
+    )
+  ],
+  child: const MyApp(),));
 }
 
 class MyApp extends StatelessWidget {

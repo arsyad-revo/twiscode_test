@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:twiscode_test/constants/url_constant.dart';
+import 'package:twiscode_test/models/product_model.dart';
+import 'package:twiscode_test/providers/cart_provider.dart';
 import 'package:twiscode_test/utils/func_util.dart';
 import 'package:twiscode_test/widgets/cached_image.dart';
 
 class ItemCard extends StatelessWidget {
-  final dynamic data;
+  final Product? data;
   const ItemCard({Key? key, this.data}) : super(key: key);
 
   @override
@@ -17,16 +19,18 @@ class ItemCard extends StatelessWidget {
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: InkWell(
           borderRadius: BorderRadius.circular(10),
-          onTap: () {},
+          onTap: () {
+            context.read<CartProvider>().addCart(data!);
+          },
           child: Column(children: [
             SizedBox(
               height: 125,
               child: CachedImage(
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(10),
                       topRight: Radius.circular(10)),
                   imgUrl:
-                      'https://ranting.twisdev.com/uploads/1597383816290_936129497-20201203-113105.jpg'),
+                      '${UrlConstant.imageUrl}${data?.defaultPhoto?.imgPath}'),
             ),
             Expanded(
               child: Container(
@@ -36,13 +40,13 @@ class ItemCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "NamaProdukkkkkkkkkkk",
+                      "${data?.title}",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(color: Colors.blue[900]),
                     ),
                     Text(
-                      numToCurrency(10000),
+                      numToCurrency(num.tryParse(data!.price!)),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -64,7 +68,7 @@ class ItemCard extends StatelessWidget {
                               SizedBox(
                                   width: 85, //give a width of your choice
                                   child: Text(
-                                    "Kota Surabaya",
+                                    "${data?.locationName}",
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontSize: 12,
@@ -81,7 +85,7 @@ class ItemCard extends StatelessWidget {
                               SizedBox(
                                   width: 85, //give a width of your choice
                                   child: Text(
-                                    "henryjaben+ranting02@gmail.com",
+                                    "${data?.addedUserName}",
                                     overflow: TextOverflow.ellipsis,
                                     style: const TextStyle(
                                         fontSize: 12,
@@ -106,6 +110,7 @@ class ItemCard extends StatelessWidget {
                           ],
                         ),
                         Visibility(
+                          visible: data?.isHalal == "1",
                           child: Expanded(
                             child: Container(
                               padding:

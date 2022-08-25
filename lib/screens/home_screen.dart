@@ -1,6 +1,8 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
+import 'package:twiscode_test/providers/product_provider.dart';
 import 'package:twiscode_test/screens/cart_screen.dart';
 import 'package:twiscode_test/widgets/item_card.dart';
 import 'package:twiscode_test/widgets/item_shimmer.dart';
@@ -16,10 +18,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    context.read<ProductProvider>().getProducts();
   }
 
   @override
   Widget build(BuildContext context) {
+    final notifier = context.select((ProductProvider n) => n);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -45,7 +49,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                   shape: BadgeShape.square,
-                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
                   borderRadius: BorderRadius.circular(3),
                   child: const Icon(
                     Icons.shopping_cart,
@@ -56,19 +60,43 @@ class _HomeState extends State<Home> {
         ),
         body: Center(
           child: SingleChildScrollView(
-            child: GridView.builder(
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(15),
-                physics: const ScrollPhysics(),
-                itemCount: 10,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisSpacing: 10,
-                    mainAxisSpacing: 15,
-                    crossAxisCount: 2,
-                    childAspectRatio: 80 / 125),
-                itemBuilder: (context, i) {
-                  return ItemCard();
-                }),
+            child: Consumer<ProductProvider>(
+              builder: (context, value, child) {
+                if (value.loading!) {
+                  return GridView.builder(
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(15),
+                      physics: const ScrollPhysics(),
+                      itemCount: 10,
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 15,
+                              crossAxisCount: 2,
+                              childAspectRatio: 80 / 125),
+                      itemBuilder: (context, i) {
+                        return const ItemShimmer();
+                      });
+                }
+                return GridView.builder(
+                    shrinkWrap: true,
+                    padding: const EdgeInsets.all(15),
+                    physics: const ScrollPhysics(),
+                    itemCount: value.products?.length,
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisSpacing: 10,
+                            mainAxisSpacing: 15,
+                            crossAxisCount: 2,
+                            childAspectRatio: 80 / 125),
+                    itemBuilder: (context, i) {
+                      final product = value.products?[i];
+                      return ItemCard(
+                        data: product,
+                      );
+                    });
+              },
+            ),
           ),
         ));
   }

@@ -51,23 +51,18 @@ class APIService {
     return result;
   }
 
-  static Future<BasicResponse> postData(
-      String? url, Map<dynamic, dynamic>? params,
+  static Future<BasicResponse> postData(String? url,
       {bool isJson = false}) async {
     BasicResponse result = BasicResponse();
-    int timeout = 30;
+    int timeout = 60;
     try {
-      http.Response response = await http
-          .post(Uri.parse(url!),
-              headers: <String, String>{
-                'Accept': 'application/json',
-                if (isJson) 'Content-Type': 'application/json; charset=UTF-8',
-                if (!isJson)
-                  'Content-Type':
-                      'application/x-www-form-urlencoded; charset=UTF-8',
-              },
-              body: isJson ? jsonEncode(params) : params)
-          .timeout(Duration(seconds: timeout));
+      http.Response response = await http.post(
+        Uri.parse(url!),
+        headers: <String, String>{
+          'Accept': 'application/json',
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+      ).timeout(Duration(seconds: timeout));
       final data = json.decode(response.body);
       log(response.body, name: "Result API");
       result = BasicResponse(

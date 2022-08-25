@@ -62,7 +62,7 @@ class Product {
   String? isOwner;
   GetAddress? getAddress;
   List<GetDelivery>? getDelivery;
-  int? cartQuantity;
+  int? cartQuantity = 1;
 
   Product(
       {this.id,
@@ -128,7 +128,7 @@ class Product {
       this.isOwner,
       this.getAddress,
       this.getDelivery,
-      this.cartQuantity});
+      this.cartQuantity = 1});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -208,7 +208,7 @@ class Product {
     user = json['user'] != null ? User.fromJson(json['user']) : null;
     isFavourited = json['is_favourited'];
     isOwner = json['is_owner'];
-    getAddress = json['get_address'] != null
+    getAddress = json['get_address'] != null && json['get_address'] != ""
         ? GetAddress.fromJson(json['get_address'])
         : null;
     if (json['get_delivery'] != null && json['get_delivery'] != "") {
@@ -217,7 +217,7 @@ class Product {
         getDelivery!.add(GetDelivery.fromJson(v));
       });
     }
-    cartQuantity = json['cart_quantity'];
+    cartQuantity = json['cart_quantity'] ?? 1;
   }
 
   Map<String, dynamic> toJson() {
@@ -309,7 +309,7 @@ class Product {
     if (getDelivery != null && getDelivery!.isNotEmpty) {
       data['get_delivery'] = getDelivery!.map((v) => v.toJson()).toList();
     }
-    data['cart_quantity'] = cartQuantity;
+    data['cart_quantity'] = cartQuantity ?? 1;
     return data;
   }
 }

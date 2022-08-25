@@ -1,7 +1,7 @@
 class BasicResponse {
   int? statusCode;
   String? messages;
-  Map<dynamic, dynamic>? data;
+  dynamic data;
 
   BasicResponse({
     this.statusCode,

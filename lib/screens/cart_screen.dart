@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:twiscode_test/providers/cart_provider.dart';
 import 'package:twiscode_test/utils/func_util.dart';
 import 'package:twiscode_test/widgets/item_list.dart';
 
-class CartScreen extends StatefulWidget {
+class CartScreen extends StatelessWidget {
   const CartScreen({Key? key}) : super(key: key);
 
-  @override
-  State<CartScreen> createState() => _CartScreenState();
-}
-
-class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +38,20 @@ class _CartScreenState extends State<CartScreen> {
                     fontWeight: FontWeight.w500),
               ),
             ),
-            Expanded(
-                child: ListView.separated(
-              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-              itemCount: 10,
-              itemBuilder: (context, index) {
-                return ItemList();
-              },
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(
-                  height: 10,
+            Expanded(child: Consumer<CartProvider>(
+              builder: (context, value, child) {
+                return ListView.separated(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  itemCount: value.products!.length,
+                  itemBuilder: (context, index) {
+                    return ItemList();
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(
+                      height: 10,
+                    );
+                  },
                 );
               },
             )),
