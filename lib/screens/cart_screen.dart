@@ -47,6 +47,7 @@ class CartScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return ItemList(
                       cart: value.cartItems[index],
+                      index: index,
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {

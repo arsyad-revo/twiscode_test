@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:twiscode_test/constants/url_constant.dart';
 import 'package:twiscode_test/models/cart_model.dart';
+import 'package:twiscode_test/providers/cart_provider.dart';
 import 'package:twiscode_test/utils/func_util.dart';
 import 'package:twiscode_test/widgets/cached_image.dart';
 
 class ItemList extends StatelessWidget {
   final Cart? cart;
-  const ItemList({Key? key, this.cart}) : super(key: key);
+  final int? index;
+  const ItemList({Key? key, this.cart, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -76,27 +79,40 @@ class ItemList extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  GestureDetector(
-                      onTap: () {},
-                      behavior: HitTestBehavior.translucent,
-                      child: Icon(
-                        Icons.indeterminate_check_box,
-                        color: Colors.red[400],
-                      )),
-                  Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 5),
-                      child: Text("${cart!.quantity}")),
-                  GestureDetector(
-                    onTap: () {},
-                    behavior: HitTestBehavior.translucent,
-                    child: const Icon(
-                      Icons.add_box,
-                      color: Colors.cyan,
-                    ),
-                  ),
-                ],
+              Consumer<CartProvider>(
+                builder: (context, value, child) {
+                  return Row(
+                    children: [
+                      GestureDetector(
+                          onTap: () {
+                            value.decrease(index!);
+                          },
+                          behavior: HitTestBehavior.translucent,
+                          child: Icon(
+                            Icons.indeterminate_check_box,
+                            color: Colors.red[400],
+                            size: 25,
+                          )),
+                      Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            "${cart!.quantity}",
+                            style: const TextStyle(fontSize: 15),
+                          )),
+                      GestureDetector(
+                        onTap: () {
+                          value.increase(index!);
+                        },
+                        behavior: HitTestBehavior.translucent,
+                        child: const Icon(
+                          Icons.add_box,
+                          color: Colors.cyan,
+                          size: 25,
+                        ),
+                      ),
+                    ],
+                  );
+                },
               ),
               Visibility(
                 visible: cart!.condition!.isNotEmpty,

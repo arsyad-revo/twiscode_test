@@ -76,6 +76,20 @@ class CartProvider with ChangeNotifier {
     prefs.setString('cart', json.encode(cartItems));
   }
 
+  increase(int index) {
+    cartItems[index].quantity = cartItems[index].quantity! + 1;
+    calculateTotalQty();
+    saveCart();
+  }
+
+  decrease(int index) {
+    if (cartItems[index].quantity != 0) {
+      cartItems[index].quantity = cartItems[index].quantity! - 1;
+    }
+    calculateTotalQty();
+    saveCart();
+  }
+
   void resetCart() {
     cartItems = [];
     totalItem = 0;

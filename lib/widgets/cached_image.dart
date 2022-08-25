@@ -28,6 +28,9 @@ class CachedImage extends StatelessWidget {
                 child: customLoading(),
               ),
             ),
-        errorWidget: (context, url, error) => const Icon(Icons.error));
+        errorWidget: (context, url, error) => const Icon(
+              Icons.image_not_supported,
+              size: 55,
+            ));
   }
 }

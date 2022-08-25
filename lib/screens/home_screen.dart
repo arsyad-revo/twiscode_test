@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:twiscode_test/providers/cart_provider.dart';
 import 'package:twiscode_test/providers/product_provider.dart';
 import 'package:twiscode_test/screens/cart_screen.dart';
+import 'package:twiscode_test/widgets/alert_widget.dart';
 import 'package:twiscode_test/widgets/item_card.dart';
 import 'package:twiscode_test/widgets/item_shimmer.dart';
 
@@ -25,6 +26,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final loading = context.select((ProductProvider n) => n.loading);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -34,15 +36,6 @@ class _HomeState extends State<Home> {
           ),
           centerTitle: true,
           actions: [
-            IconButton(
-              onPressed: () {
-                context.read<CartProvider>().resetCart();
-              },
-              icon: const Icon(
-                Icons.sync,
-                color: Colors.black,
-              ),
-            ),
             IconButton(onPressed: () {
               Navigator.push(
                   context,
@@ -74,7 +67,7 @@ class _HomeState extends State<Home> {
           child: SingleChildScrollView(
             child: Consumer<ProductProvider>(
               builder: (context, value, child) {
-                if (value.loading!) {
+                if (loading!) {
                   return GridView.builder(
                       shrinkWrap: true,
                       padding: const EdgeInsets.all(15),
@@ -89,6 +82,14 @@ class _HomeState extends State<Home> {
                       itemBuilder: (context, i) {
                         return const ItemShimmer();
                       });
+                }
+                if (value.resultProducts.statusCode != 200 && !loading) {
+                  return AlertWidget(
+                    onPressed: () {
+                      setState(() {});
+                      context.read<ProductProvider>().getProducts();
+                    },
+                  );
                 }
                 return GridView.builder(
                     shrinkWrap: true,
