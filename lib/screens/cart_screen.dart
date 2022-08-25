@@ -43,9 +43,11 @@ class CartScreen extends StatelessWidget {
                 return ListView.separated(
                   padding:
                       const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                  itemCount: value.products!.length,
+                  itemCount: value.cartItems.length,
                   itemBuilder: (context, index) {
-                    return ItemList();
+                    return ItemList(
+                      cart: value.cartItems[index],
+                    );
                   },
                   separatorBuilder: (BuildContext context, int index) {
                     return const SizedBox(
@@ -73,24 +75,28 @@ class CartScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Total harga",
-                        style: TextStyle(
-                            color: Colors.blue[900],
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
-                      ),
-                      Text(
-                        numToCurrency(10000),
-                        style: TextStyle(
-                            color: Colors.amber[700],
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500),
-                      ),
-                    ],
+                  Consumer<CartProvider>(
+                    builder: (context, value, child) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Total harga",
+                            style: TextStyle(
+                                color: Colors.blue[900],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
+                          ),
+                          Text(
+                            numToCurrency(value.totalPrice),
+                            style: TextStyle(
+                                color: Colors.amber[700],
+                                fontSize: 14,
+                                fontWeight: FontWeight.w500),
+                          ),
+                        ],
+                      );
+                    },
                   ),
                   SizedBox(
                     height: 35,

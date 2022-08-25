@@ -2,6 +2,7 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
+import 'package:twiscode_test/providers/cart_provider.dart';
 import 'package:twiscode_test/providers/product_provider.dart';
 import 'package:twiscode_test/screens/cart_screen.dart';
 import 'package:twiscode_test/widgets/item_card.dart';
@@ -19,11 +20,11 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     context.read<ProductProvider>().getProducts();
+    context.read<CartProvider>().loadCartCount();
   }
 
   @override
   Widget build(BuildContext context) {
-    final notifier = context.select((ProductProvider n) => n);
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
@@ -34,17 +35,26 @@ class _HomeState extends State<Home> {
           centerTitle: true,
           actions: [
             IconButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      PageTransition(
-                          type: PageTransitionType.fade,
-                          child: const CartScreen()));
-                },
-                icon: Badge(
+              onPressed: () {
+                context.read<CartProvider>().resetCart();
+              },
+              icon: const Icon(
+                Icons.sync,
+                color: Colors.black,
+              ),
+            ),
+            IconButton(onPressed: () {
+              Navigator.push(
+                  context,
+                  PageTransition(
+                      type: PageTransitionType.fade,
+                      child: const CartScreen()));
+            }, icon: Consumer<CartProvider>(
+              builder: (context, value, child) {
+                return Badge(
                   badgeContent: Text(
-                    '3',
-                    style: TextStyle(
+                    '${value.totalItem}',
+                    style: const TextStyle(
                       color: Colors.white,
                     ),
                   ),
@@ -55,7 +65,9 @@ class _HomeState extends State<Home> {
                     Icons.shopping_cart,
                     color: Colors.black,
                   ),
-                ))
+                );
+              },
+            ))
           ],
         ),
         body: Center(
@@ -93,6 +105,7 @@ class _HomeState extends State<Home> {
                       final product = value.products?[i];
                       return ItemCard(
                         data: product,
+                        index: i,
                       );
                     });
               },

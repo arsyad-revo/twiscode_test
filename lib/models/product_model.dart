@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Product {
   String? id;
   String? catId;
@@ -62,7 +64,7 @@ class Product {
   String? isOwner;
   GetAddress? getAddress;
   List<GetDelivery>? getDelivery;
-  int? cartQuantity = 1;
+  ValueNotifier<int>? cartQuantity;
 
   Product(
       {this.id,
@@ -128,7 +130,7 @@ class Product {
       this.isOwner,
       this.getAddress,
       this.getDelivery,
-      this.cartQuantity = 1});
+      this.cartQuantity});
 
   Product.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -217,7 +219,6 @@ class Product {
         getDelivery!.add(GetDelivery.fromJson(v));
       });
     }
-    cartQuantity = json['cart_quantity'] ?? 1;
   }
 
   Map<String, dynamic> toJson() {
@@ -309,7 +310,6 @@ class Product {
     if (getDelivery != null && getDelivery!.isNotEmpty) {
       data['get_delivery'] = getDelivery!.map((v) => v.toJson()).toList();
     }
-    data['cart_quantity'] = cartQuantity ?? 1;
     return data;
   }
 }
