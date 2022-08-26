@@ -83,8 +83,10 @@ class CartProvider with ChangeNotifier {
   }
 
   decrease(int index) {
-    if (cartItems[index].quantity != 0) {
+    if (cartItems[index].quantity! > 1) {
       cartItems[index].quantity = cartItems[index].quantity! - 1;
+    }else{
+      cartItems.removeAt(index);
     }
     calculateTotalQty();
     saveCart();
